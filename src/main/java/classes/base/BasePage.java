@@ -1,24 +1,29 @@
-package pages.base;
+package base;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import utils.Browser;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 public class BasePage {
-    protected static WebDriver driver = Browser.getDriver();
+    protected WebDriver driver;
 
-    public BasePage() {
-    }
-
-    public static void clickOnWebElementByLocator(By locator) {
-        driver.findElement(locator).click();
-    }
-
-    public static void writeTextInWebElement(By locator, String text) {
-        driver.findElement(locator).sendKeys(new CharSequence[]{text});
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
     }
 
     public void goPage(String url) {
         this.driver.get(url);
+    }
+
+    protected void clickOnWebElement(WebElement webElement) {
+        webElement.click();
+    }
+
+    protected void typeInWebElement(WebElement webElement, String text) {
+        webElement.sendKeys(new CharSequence[]{text});
+    }
+
+    public void verifyWebElementIsPresent(WebElement webElement) {
+        Assert.assertTrue(webElement.isDisplayed());
     }
 }
